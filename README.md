@@ -109,6 +109,7 @@ rename column quantiy to quantity;
 ### 3. Data Analysis & Findings
 
 The following SQL queries were developed to answer specific business questions:
+```sql
 
 **Q.1 Write a SQL query to retrieve all columns for sales made on '2022-11-05'**
 select * from retail_sales
@@ -169,7 +170,7 @@ case when sale_time<='12:00:00' then 'morning'
 	 from retail_sales
 	 group by shift
 	 order by total_orders;
-
+'''
 ## Findings
 
 - **Customer Demographics**: The dataset includes customers from various age groups, with sales distributed across different categories such as Clothing and Beauty.
