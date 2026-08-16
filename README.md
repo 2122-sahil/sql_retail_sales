@@ -18,7 +18,7 @@
 - **Table Creation: A table named retail_sales is created to store retail sales data. The table structure includes columns for transaction ID (transactions_id), sale date (sale_date), sale time (sale_time), customer ID (customer_id), gender (gender), age (age), product category (category), quantity sold (quantiy), price per unit (price_per_unit), cost of goods sold (cogs), and total sale amount (total_sale).**
 
 ```sql
-CREATE DATABASE p1_retail_db;
+CREATE DATABASE sql_p1;
 
 create table retail_sales(
 transactions_id serial primary key,
@@ -45,13 +45,65 @@ total_sale float
 ```sql
 --Data Exploration
 --how many sales we have?
-select count(*) as total_sales from retail_salescos;
+select count(*) as total_sales from retail_sales;
 --how many costumers we have?
 select count(distinct customer_id) as total_customers from retail_sales;
 --how many categories we have?
 select distinct category from retail_sales;
 select count(distinct category) from retail_sales;
 select count( category) from retail_sales;
+
+--Data cleaning
+select * from retail_sales
+where
+transactions_id is null
+or
+sale_date is null
+or
+sale_time is null
+or
+customer_id is null
+or
+gender is null
+or
+age is null
+or
+category is null
+or
+quantiy is null
+or
+price_per_unit is null
+or
+cogs is null
+or
+total_sale is null;
+--
+delete from retail_sales
+where
+transactions_id is null
+or
+sale_date is null
+or
+sale_time is null
+or
+customer_id is null
+or
+gender is null
+or
+age is null
+or
+category is null
+or
+quantiy is null
+or
+price_per_unit is null
+or
+cogs is null
+or
+total_sale is null;
+
+alter table retail_sales
+rename column quantiy to quantity;
 ```
 
 ### 3. Data Analysis & Findings
@@ -79,7 +131,7 @@ where category='Beauty';
 select * from retail_sales
 where total_sale>1000;
 
-**Q.6 Write a SQL query to find the total number of transactions (transaction_id) made by each gender in each category.**
+**Q.6 Write a SQL query to find the total number of transactions (transactions_id) made by each gender in each category.**
 select count(transactions_id), gender, category from retail_sales
 group by gender, category;
 
@@ -92,7 +144,7 @@ select
 	rank() over(partition by extract(year from sale_date) order by avg(total_sale) desc ) as rank
 	from retail_sales
 	group by year, month)
-	where rank=1
+	where rank=1;
 
 **Q.8 Write a SQL query to find the top 5 customers based on the highest total sales**
 select customer_id,
@@ -125,12 +177,23 @@ case when sale_time<='12:00:00' then 'morning'
 - **Sales Trends**: Monthly analysis shows variations in sales, helping identify peak seasons.
 - **Customer Insights**: The analysis identifies the top-spending customers and the most popular product categories.
 
-## Reports
+## Reports & Analysis:
 
-- **Sales Summary**: A detailed report summarizing total sales, customer demographics, and category performance.
-- **Trend Analysis**: Insights into sales trends across different months and shifts.
-- **Customer Insights**: Reports on top customers and unique customer counts per category.
+### Sales Analysis
+- Retrieved sales transactions for specific dates.
+- Calculated total sales by product category.
+- Identified high-value transactions with total sales above 1000.
+- Analyzed monthly average sales and identified the best-selling month for each year.
 
+### Customer Analysis
+- Identified the top 5 customers based on total sales.
+- Calculated the number of unique customers purchasing from each category.
+- Analyzed customer demographics through gender and age-based analysis.
+
+### Order & Time Analysis
+- Analyzed transaction volume by gender and category.
+- Classified transactions into Morning, Afternoon, and Evening shifts.
+- Compared order volumes across different shifts.
 
 
 ## Author - sahil yadav
